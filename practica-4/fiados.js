@@ -3,4 +3,4 @@ function calcularMora(monto, diasVencidos){
 }
 
 
-module.export = { calcularMora };   
+module.exports = { calcularMora };   

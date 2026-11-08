@@ -6,6 +6,14 @@ function assertEqual(actual, esperado) {
     return actual;
 }
 
+function assertThrows(fn) {
+    try {
+        fn();
+    } catch (error) {
+        return;
+    }
+    throw new Error(`esperaba que la función lanzara un error`);
+}
 let pasados = 0, fallidos = 0;
 
 function test(nombre, fn) {
@@ -19,14 +27,12 @@ function test(nombre, fn) {
     }
 }
 
-test('prueba que pasa', () => {
-    assertEqual(2 + 2, 4);
+test('monto negativo', () => {
+    const monto = 1000;
+    const dias = 1;
 
-});
-test('prueba que falla', () => {
-    assertEqual(2 + 2, 5);
-
+    assertThrows(() => calcularMora(-monto, dias));
 });
 
-console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);  
+console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);
 
