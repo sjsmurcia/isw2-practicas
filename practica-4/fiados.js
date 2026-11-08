@@ -5,7 +5,7 @@ function calcularMora(monto, diasVencidos) {
     if(typeof diasVencidos !== 'number'){
         throw new Error('los dias vencidos deben ser un numero');
     }
-    if(diasVencidos >= 0)
+    if(diasVencidos >0)
     {
         return monto * 0.05;
     }else{
