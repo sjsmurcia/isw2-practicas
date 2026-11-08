@@ -62,5 +62,11 @@ test('monto 0 con 5 dias vencidos, mora 0', ()=>{
     assertEqual(mora, 0);
 })
 
+test('dias NaN lanza error', ()=>{
+    const monto= 1000;
+    const dias = NaN;
+    assertThrows(() => calcularMora(monto, dias));
+})
+
 console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);
 
