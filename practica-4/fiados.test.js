@@ -52,7 +52,15 @@ test('0 dias vencidos, mora 0', ()=>{
     const dias =0;
     const mora = calcularMora(monto, dias);
     assertEqual(mora, 0);
-    
+
 })
+
+test('monto 0 con 5 dias vencidos, mora 0', ()=>{
+    const monto = 0;
+    const dias =5;
+    const mora = calcularMora(monto, dias);
+    assertEqual(mora, 0);
+})
+
 console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);
 
