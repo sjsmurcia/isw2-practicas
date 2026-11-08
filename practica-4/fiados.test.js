@@ -33,6 +33,12 @@ test('monto negativo', () => {
 
     assertThrows(() => calcularMora(-monto, dias));
 });
+test('dias no numericos', () => {
+    const monto = 1000;
+    const dias = 'uno';
+
+    assertThrows(() => calcularMora(monto, dias));
+})
 
 console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);
 
