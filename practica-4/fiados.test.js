@@ -40,5 +40,13 @@ test('dias no numericos', () => {
     assertThrows(() => calcularMora(monto, dias));
 })
 
+test('1000 con 10 dias vencidos, mora -> 50', ()=>{
+    const monto = 1000;
+    const dias =10;
+
+    const mora = calcularMora(monto, dias);
+    assertEqual(mora, 50);
+})
+
 console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);
 
