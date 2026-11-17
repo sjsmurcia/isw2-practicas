@@ -201,6 +201,17 @@ function correrSuite(nombreSuite, registrarVenta) {
 correrSuite('enfermo.js', enfermo.proc);
 correrSuite('sano.js', sano.registrarVenta);
 
+test('sano.js: el ticket se puede inyectar sin tocar console.log', () => {
+    const cliente = clienteContado();
+    const items = cienLempiras();
+    const impreso = [];
+
+    sano.registrarVenta(cliente, items, 'normal', (linea) => impreso.push(linea));
+
+    assertEqual(impreso.length, 1);
+    assertEqual(impreso[0], 'Cliente: Olga | Total: L 115.00');
+});
+
 console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);
 if (fallidos > 0) {
     process.exitCode = 1;
