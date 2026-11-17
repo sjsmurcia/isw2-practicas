@@ -1,3 +1,8 @@
+const TASA_ISV = 0.15;
+const DESCUENTO_FRECUENTE = 0.05;
+const DESCUENTO_MAYORISTA = 0.1;
+const LIMITE_FIADO = 500;
+
 function registrarVenta(cliente, items, tipoCliente) {
     let subtotal = 0;
     let total = 0;
@@ -8,11 +13,11 @@ function registrarVenta(cliente, items, tipoCliente) {
             }
             // aplica el descuento del 10% a clientes frecuentes
             if (tipoCliente === 'frecuente') {
-                total = (subtotal - subtotal * 0.05) + (subtotal - subtotal * 0.05) * 0.15;
+                total = (subtotal - subtotal * DESCUENTO_FRECUENTE) + (subtotal - subtotal * DESCUENTO_FRECUENTE) * TASA_ISV;
             } else if (tipoCliente === 'mayorista') {
-                total = (subtotal - subtotal * 0.1) + (subtotal - subtotal * 0.1) * 0.15;
+                total = (subtotal - subtotal * DESCUENTO_MAYORISTA) + (subtotal - subtotal * DESCUENTO_MAYORISTA) * TASA_ISV;
             } else {
-                total = subtotal + subtotal * 0.15;
+                total = subtotal + subtotal * TASA_ISV;
             }
             // total = total * 1.02; // recargo viejo, no borrar por si acaso
             if (cliente.fiado) {
