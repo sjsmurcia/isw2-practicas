@@ -199,7 +199,7 @@ function correrSuite(nombreSuite, registrarVenta) {
 }
 
 correrSuite('enfermo.js', enfermo.proc);
-correrSuite('sano.js', sano.proc);
+correrSuite('sano.js', sano.registrarVenta);
 
 console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);
 if (fallidos > 0) {
