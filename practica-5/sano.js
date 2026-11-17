@@ -3,6 +3,10 @@ const DESCUENTO_FRECUENTE = 0.05;
 const DESCUENTO_MAYORISTA = 0.1;
 const LIMITE_FIADO = 500;
 
+function calcularSubtotal(items) {
+    return items.reduce((suma, item) => suma + item.precio * item.cant, 0);
+}
+
 function registrarVenta(cliente, items, tipoCliente) {
     if (!cliente) {
         throw new Error('falta el cliente');
@@ -11,11 +15,8 @@ function registrarVenta(cliente, items, tipoCliente) {
         throw new Error('no hay items en la venta');
     }
 
-    let subtotal = 0;
+    const subtotal = calcularSubtotal(items);
     let total = 0;
-    for (let i = 0; i < items.length; i++) {
-        subtotal = subtotal + items[i].precio * items[i].cant;
-    }
     // aplica el descuento del 10% a clientes frecuentes
     if (tipoCliente === 'frecuente') {
         total = (subtotal - subtotal * DESCUENTO_FRECUENTE) + (subtotal - subtotal * DESCUENTO_FRECUENTE) * TASA_ISV;
