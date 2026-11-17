@@ -1,4 +1,5 @@
-const { proc } = require('./enfermo.js');
+const enfermo = require('./enfermo.js');
+const sano = require('./sano.js');
 
 function assertEqual(actual, esperado) {
     if (actual !== esperado) {
@@ -197,7 +198,8 @@ function correrSuite(nombreSuite, registrarVenta) {
     });
 }
 
-correrSuite('enfermo.js', proc);
+correrSuite('enfermo.js', enfermo.proc);
+correrSuite('sano.js', sano.proc);
 
 console.log(`\n${pasados} pasaron, ${fallidos} fallaron`);
 if (fallidos > 0) {
