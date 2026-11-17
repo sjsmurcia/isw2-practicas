@@ -19,9 +19,8 @@ function registrarVenta(cliente, items, tipoCliente) {
             } else {
                 total = subtotal + subtotal * TASA_ISV;
             }
-            // total = total * 1.02; // recargo viejo, no borrar por si acaso
             if (cliente.fiado) {
-                if (cliente.deuda + total > 500) {
+                if (cliente.deuda + total > LIMITE_FIADO) {
                     throw new Error('limite de fiado superado');
                 } else {
                     cliente.deuda = cliente.deuda + total;
