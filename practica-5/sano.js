@@ -1,13 +1,32 @@
 const TASA_ISV = 0.15;
-const DESCUENTO_FRECUENTE = 0.05;
-const DESCUENTO_MAYORISTA = 0.1;
 const LIMITE_FIADO = 500;
+const DESCUENTO_POR_TIPO = new Map([
+    ['frecuente', 0.05],
+    ['mayorista', 0.1],
+]);
 
 function calcularSubtotal(items) {
     return items.reduce((suma, item) => suma + item.precio * item.cant, 0);
 }
 
-function registrarVenta(cliente, items, tipoCliente) {
+function calcularTotal(subtotal, tipoCliente) {
+    const descuento = DESCUENTO_POR_TIPO.get(tipoCliente) ?? 0;
+    const base = subtotal - subtotal * descuento;
+    return base + base * TASA_ISV;
+}
+
+function cargarAFiado(cliente, total) {
+    if (cliente.deuda + total > LIMITE_FIADO) {
+        throw new Error('limite de fiado superado');
+    }
+    cliente.deuda = cliente.deuda + total;
+}
+
+function formatearTicket(cliente, total) {
+    return 'Cliente: ' + cliente.nombre + ' | Total: L ' + total.toFixed(2);
+}
+
+function registrarVenta(cliente, items, tipoCliente, imprimir = console.log) {
     if (!cliente) {
         throw new Error('falta el cliente');
     }
@@ -16,22 +35,11 @@ function registrarVenta(cliente, items, tipoCliente) {
     }
 
     const subtotal = calcularSubtotal(items);
-    let total = 0;
-    // aplica el descuento del 10% a clientes frecuentes
-    if (tipoCliente === 'frecuente') {
-        total = (subtotal - subtotal * DESCUENTO_FRECUENTE) + (subtotal - subtotal * DESCUENTO_FRECUENTE) * TASA_ISV;
-    } else if (tipoCliente === 'mayorista') {
-        total = (subtotal - subtotal * DESCUENTO_MAYORISTA) + (subtotal - subtotal * DESCUENTO_MAYORISTA) * TASA_ISV;
-    } else {
-        total = subtotal + subtotal * TASA_ISV;
-    }
+    const total = calcularTotal(subtotal, tipoCliente);
     if (cliente.fiado) {
-        if (cliente.deuda + total > LIMITE_FIADO) {
-            throw new Error('limite de fiado superado');
-        }
-        cliente.deuda = cliente.deuda + total;
+        cargarAFiado(cliente, total);
     }
-    console.log('Cliente: ' + cliente.nombre + ' | Total: L ' + total.toFixed(2));
+    imprimir(formatearTicket(cliente, total));
     return total;
 }
 
